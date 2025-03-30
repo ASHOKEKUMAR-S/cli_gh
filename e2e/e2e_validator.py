@@ -165,9 +165,21 @@ def generate_html_report(repo_name, repo_url, config, train_job, infer_job, chec
 
     </body></html>
     """
+    #write HTML to file, file name is repo_name + timestamp+.html
+    output_dir = "reports"
+    os.makedirs(output_dir, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_path = os.path.join(output_dir, f"{repo_name}_{timestamp}.html")
+    # Ensure the output path is unique
+    if os.path.exists(output_path):
+        base, ext = os.path.splitext(output_path)
+        output_path = f"{base}_{timestamp}{ext}"
+    # Write the HTML content to the file
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
     return os.path.abspath(output_path)
+    
+    
 
 
 def run_e2e_validation(repo_name):
