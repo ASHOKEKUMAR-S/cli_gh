@@ -53,6 +53,7 @@ def check_repo_secrets(repo_name):
     response = requests.get(url, headers={"Authorization": f"Bearer {GH_TOKEN}"})
     if response.status_code == 200:
         secrets = [s["name"] for s in response.json().get("secrets", [])]
+        print("Existing secrets:", secrets)
         expected = ["GH_TOKEN", "DATABRICKS_HOST", "DATABRICKS_USERNAME", "MLFLOW_USER_EMAIL"]
         return all(secret in secrets for secret in expected)
     return False
