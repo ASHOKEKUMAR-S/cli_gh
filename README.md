@@ -37,7 +37,7 @@ Before running the CLI tool, ensure the following **GitHub repository secrets** 
 ## 🔧 Installation
 
 ```bash
-git clone https://github.com/Ashoke238/cli_gh.git
+git clone https://github.com/ASHOKEKUMAR-S/cli_gh.git
 cd cli_gh
 python -m venv venv
 source venv/bin/activate  # Use `venv\Scripts\activate` on Windows
@@ -92,7 +92,7 @@ on:
 ### 📄 E2E HTML Report
 
 - Auto-generated to `/e2e/reports/e2e_report_<repo_name>.html`
-- Publishes summary to GitHub Pages: [https://ashoke238.github.io/e2e\_reports](https://ashoke238.github.io/e2e_reports)
+- Publishes summary to GitHub Pages: [https://ASHOKEKUMAR-S.github.io/e2e\_reports](https://ASHOKEKUMAR-S.github.io/e2e_reports)
 
 ---
 
@@ -140,7 +140,7 @@ The final validation report will include:
 - CLI automation health check
 - Direct link to Databricks jobs
 
-Example GitHub Pages Report: [View Report](https://ashoke238.github.io/e2e_reports)
+Example GitHub Pages Report: [View Report](https://ASHOKEKUMAR-S.github.io/e2e_reports)
 
 ---
 
