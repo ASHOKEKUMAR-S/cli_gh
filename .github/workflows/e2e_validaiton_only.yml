@@ -1,0 +1,79 @@
+name: Run E2E Validation Only
+
+on:
+  workflow_dispatch:
+    inputs:
+      mock_repo:
+        description: 'Mock Repo Name (already created)'
+        required: true
+        default: 'e2e1_3'  # Replace with any real previously created repo
+
+jobs:
+  validate-e2e:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+      DATABRICKS_USERNAME: ${{ secrets.DATABRICKS_USERNAME }}
+      MLFLOW_USER_EMAIL: ${{ secrets.MLFLOW_USER_EMAIL }}
+      REPO_NAME: ${{ github.event.inputs.mock_repo }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Set PYTHONPATH
+      run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+
+    - name: Run E2E Validator Only
+      run: |
+        source venv/bin/activate
+        python e2e/run_e2e.py "${{ github.event.inputs.mock_repo }}"        
+        echo "Reading report path from file:"
+        cat report_path.txt
+        REPORT_PATH=$(cat report_path.txt)
+        echo "REPORT_PATH=$REPORT_PATH" >> $GITHUB_ENV
+
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+        DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        DATABRICKS_USERNAME: ${{ secrets.DATABRICKS_USERNAME }}
+        MLFLOW_USER_EMAIL: ${{ secrets.MLFLOW_USER_EMAIL }}
+
+    - name: Push HTML Report to e2e_reports repo
+      run: |
+            git config --global user.email "gh-actions@users.noreply.github.com"
+            git config --global user.name "GitHub Actions"
+
+            git clone https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Ashoke238/e2e_reports.git
+            cd e2e_reports
+
+            mkdir -p reports
+
+            # Use full path to copy
+            echo "Trying to copy: ${{ github.workspace }}/$REPORT_PATH"
+            cp "${{ github.workspace }}/$REPORT_PATH" reports/
+
+            REPORT_FILENAME=$(basename "$REPORT_PATH")
+            if ! grep -q "$REPORT_FILENAME" index.html; then
+            echo "<li><a href=\"reports/$REPORT_FILENAME\">$REPORT_FILENAME</a></li>" >> index.html
+            fi
+
+            git add reports/*.html index.html
+            git commit -m "✅ E2E report for ${{ github.event.inputs.mock_repo }} - $(date +'%Y-%m-%d %H:%M:%S')" || echo "⚠️ Nothing to commit"
+            git push
+      env:
+            REPORT_PATH: ${{ env.REPORT_PATH }}
