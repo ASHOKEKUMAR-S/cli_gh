@@ -49,9 +49,9 @@ def check_workflow_exists(repo):
         return False
 
 def check_repo_secrets(repo_name):
-    url = f"https://api.github.com/repos/{USERNAME}/{repo_name}/actions/secrets"
+    url = f"https://api.github.com/repos/${{ github.repository_owner }}/{repo_name}/actions/secrets"
     response = requests.get(url, headers={"Authorization": f"Bearer {GH_TOKEN}"})
-    print("Response is ",response.status_code,response.json())
+    print("Response is ",response.status_code)
     if response.status_code == 200:
         secrets = [s["name"] for s in response.json().get("secrets", [])]
         print("Existing secrets:", secrets)
@@ -137,7 +137,7 @@ def generate_html_report(repo_name, repo_url, config, train_job, infer_job, chec
         <h3>🔷 Databricks Integration</h3>
         <table>
         <tr><th>Check</th><th>Status</th><th>Details</th></tr>
-        {row("Repo Imported to Databricks", True, f"Path: Repos/{USERNAME}/{repo_name}")}
+        {row("Repo Imported to Databricks", True, f"Path: Repos/${{ github.repository_owner }}/{repo_name}")}
         {row("Train Job Created", checks['train_job'], f"Job ID: {config.get('train_job_id', '-')}" if config else "")}
         {row("Inference Job Created", checks['infer_job'], f"Job ID: {config.get('infer_job_id', '-')}" if config else "")}
         </table>
