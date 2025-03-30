@@ -44,7 +44,7 @@ def check_config_file(repo):
 def check_workflow_exists(repo):
     try:
         contents = repo.get_contents(".github/workflows", ref="dev")
-        return any("train" in file.name.lower() or "pipeline" in file.name.lower() for file in contents)
+        return any("train" in file.name.lower() or "ci" in file.name.lower() for file in contents)
     except Exception:
         return False
 
