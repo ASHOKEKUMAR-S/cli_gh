@@ -64,8 +64,8 @@ jobs:
             mkdir -p reports
 
             # Use full path to copy
-            echo "Trying to copy: ${{ github.workspace }}/$REPORT_PATH"
-            cp "${{ github.workspace }}/$REPORT_PATH" reports/
+            echo "Trying to copy: $REPORT_PATH"
+            cp "$REPORT_PATH" reports/
 
             REPORT_FILENAME=$(basename "$REPORT_PATH")
             if ! grep -q "$REPORT_FILENAME" index.html; then
