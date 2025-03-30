@@ -52,6 +52,7 @@ jobs:
         DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         DATABRICKS_USERNAME: ${{ secrets.DATABRICKS_USERNAME }}
         MLFLOW_USER_EMAIL: ${{ secrets.MLFLOW_USER_EMAIL }}
+        GH_USERNAME: ${{ github.repository_owner }}
 
     - name: Push HTML Report to e2e_reports repo
       run: |
