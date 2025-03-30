@@ -51,6 +51,7 @@ def check_workflow_exists(repo):
 def check_repo_secrets(repo_name):
     url = f"https://api.github.com/repos/{USERNAME}/{repo_name}/actions/secrets"
     response = requests.get(url, headers={"Authorization": f"Bearer {GH_TOKEN}"})
+    print("Response is ",response.status_code,response["total_count"])
     if response.status_code == 200:
         secrets = [s["name"] for s in response.json().get("secrets", [])]
         print("Existing secrets:", secrets)
