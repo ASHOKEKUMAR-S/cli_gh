@@ -17,7 +17,7 @@ def wait_for_repo_pipeline(repo_name, timeout_minutes=15):
         "Accept": "application/vnd.github.v3+json"
     }
 
-    url = f"https://api.github.com/repos/Ashoke238/{repo_name}/actions/runs"
+    url = f"https://api.github.com/repos/ASHOKEKUMAR-S/{repo_name}/actions/runs"
     timeout = time.time() + timeout_minutes * 60
 
     print("⏳ Waiting for latest workflow in repo to complete...", flush=True)
