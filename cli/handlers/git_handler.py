@@ -15,7 +15,7 @@ load_dotenv()
 logger = setup_logger()
 
 GH_TOKEN = os.getenv("GH_TOKEN")  # renamed from GITHUB_TOKEN
-TEMPLATE_REPO_ZIP_URL = "https://github.com/Ashoke238/model_train_infer/archive/refs/heads/main.zip"
+TEMPLATE_REPO_ZIP_URL = "https://github.com/ASHOKEKUMAR-S/model_train_infer/archive/refs/heads/main.zip"
 
 
 def validate_repo_availability(repo_name):
