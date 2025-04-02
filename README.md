@@ -30,7 +30,7 @@ Before running the CLI tool, ensure the following **GitHub repository secrets** 
 | `DATABRICKS_HOST`     | Databricks workspace host URL (e.g. [https://abc.cloud.databricks.com](https://abc.cloud.databricks.com)) |
 | `DATABRICKS_TOKEN`    | Databricks PAT token                                                                                      |
 | `DATABRICKS_USERNAME` | Email used in Databricks                                                                                  |
-| `MLFLOW_USER_EMAIL`   | MLflow user email (same as `DATABRICKS_USERNAME`)                                                         |
+| `MLFLOW_USER_EMAIL`   | MLflow user email                                                 |
 
 ---
 
